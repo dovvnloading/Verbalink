@@ -194,36 +194,31 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 ---
 
-### A Developer's Note on Project Status and Architecture
+### A Developer's Note on Project Status & Future Direction
 
-Please be aware that Verbalink is a personal side project, originally created over a year and a half ago. The primary objective was to rapidly prototype the core functionality and validate the viability of the idea, prioritizing a working proof-of-concept over a well-engineered application.
+Please note that Verbalink is a personal side project, originally created over a year and a half ago. It has remained largely untouched since its initial development, with only minor updates made recently. The primary objective was to rapidly prototype a functional proof-of-concept, prioritizing implementation speed over architectural purity.
 
-The project remained untouched for a long period until a recent, minor update to change one of the default models to `phi4`. This history is crucial context for understanding the state of the codebase.
+For any developers looking to contribute, fork, or build upon this concept, it is essential to understand the current state of the code and the critical modernizations required.
 
-#### Architectural State of the Codebase
+#### The Codebase: A Snapshot in Time
 
-The application in its current form should be viewed as a functional but dated prototype. Its key architectural characteristics reflect its origin as a quick experiment:
+The application in its current form should be viewed as a functional prototype from a previous generation of local LLM capabilities. Its key characteristics are:
 
-*   **Monolithic Structure**: The entire application—including the UI layout, event handling, AI API calls, business logic, and multi-threading management—is contained within a single Python script.
-*   **Tight Coupling**: There is no separation of concerns. UI elements directly call AI generation and analysis functions, and the application's state is managed implicitly throughout the script. This makes debugging, modification, and extension extremely challenging.
-*   **Limited Scalability**: Adding new features (such as a new analysis type, support for different AI backends, or more complex UI interactions) would require significant and risky changes to the existing, tangled code.
-*   **Hardcoded Configuration**: Key parameters, such as the specific Ollama model names used for different tasks, are hardcoded directly into the function calls.
+*   **Monolithic Structure**: The entire application—including the UI, event handling, AI API calls, and business logic—is contained within a single Python script. This was a deliberate choice for rapid development but is not a sustainable architecture.
+*   **Tight Coupling**: There is no formal separation of concerns. UI elements directly call AI functions, making the code difficult to debug, modify, or extend.
+*   **Outdated Models**: The language models referenced in the code (primarily `qwen2.5:7b` and `phi4:14b`) were practical choices at the time of development. They are now significantly outdated and will produce lower-quality results.
 
-#### Important: A Note on Language Models
+#### Critical Update Recommendation: Language Models
 
-The models hardcoded in this script, such as `qwen2.5:7b` and even the more recently added `phi4`, are now significantly outdated by the rapid pace of open-source AI development.
+The single most important update for anyone using or experimenting with this code is to replace the language models. The models currently in the script are outdated and will produce significantly lower-quality results compared to modern alternatives.
 
-It is **strongly recommended** to replace these with more modern, capable open-source models to achieve high-quality results. The performance difference is not minor; newer models will provide a dramatically better experience. Excellent alternatives available through Ollama include:
+It is **strongly recommended** to replace all hardcoded model references (e.g., `model='qwen2.5:7b'`) with newer, more capable models such as `qwen3` or `gpt-oss:20b`.
 
-*   **`llama3`**: Currently one of the top-performing models for reasoning and instruction-following.
-*   **`qwen2`**: The powerful successor to the `qwen` family, offering great multilingual support and performance.
-*   **`gemma2:27b`** or **`mistral-large`**: If your hardware supports it, these larger models will yield even more nuanced and coherent outputs for both conversation and analysis.
+This change alone will dramatically improve the quality of conversation generation, the depth of the analysis, and the models' ability to follow complex persona instructions. Using the original, older models will not give a fair representation of what is possible with this concept today.
 
-Using these newer models will vastly improve reasoning, instruction-following capabilities, and overall output quality, which will dramatically enhance the results of both the conversation generation and the subsequent analysis.
+#### Architectural Path for Future Development
 
-#### Recommended Path for Future Development
-
-For anyone interested in evolving Verbalink into a more serious, robust application, a **complete rewrite and architectural redesign would be the necessary first step**. The current repository serves best as a functional blueprint and a source of inspiration for the core idea, not as a foundation to build upon directly.
+For anyone interested in evolving Verbalink into a more serious, robust application, a complete rewrite and architectural redesign is the necessary first step. The current repository serves best as a functional blueprint of an idea, not as a foundation to build upon directly.
 
 A more robust implementation should be built on the following principles:
 
@@ -235,6 +230,8 @@ A more robust implementation should be built on the following principles:
 
 2.  **Adoption of a Design Pattern**: Implementing a recognized design pattern like Model-View-Controller (MVC) or Model-View-ViewModel (MVVM) would formalize the separation between the data (Model), the user interface (View), and the application logic (Controller/ViewModel).
 
-3.  **Configuration Management**: All hardcoded parameters, especially model names, should be moved to an external configuration file (e.g., `config.json` or `settings.ini`). This would allow users to easily change models and other settings without modifying the source code.
+3.  **Configuration Management**: All hardcoded parameters, especially model names, should be moved to an external configuration file (e.g., `config.json` or `settings.ini`). This would allow users to easily change models without modifying the source code.
 
-In summary, this repository successfully demonstrates a powerful concept. It serves as a testament to the core idea, but the implementation itself is a means to an end—a product of its time—and not a scalable foundation for future work.
+4.  **Robust Error Handling and Logging**: A centralized system for logging and displaying user-friendly error messages should be implemented to improve stability and diagnostics.
+
+In its current state, this repository serves as a functional blueprint of an idea from a specific point in time. It is not a foundation for production-grade software.
