@@ -1,3 +1,5 @@
+<img width="807" height="453" alt="Verbalink_Banner_001" src="https://github.com/user-attachments/assets/30af6b39-112e-4239-971a-7a8736bcfac5" />
+
 # Verbalink: AI Conversation Generation & Analysis Tool
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
