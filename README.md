@@ -200,7 +200,7 @@ For any developers looking to contribute, fork, or build upon this concept, it i
 
 The application in its current form should be viewed as a functional prototype from a previous generation of local LLM capabilities. Its key characteristics are:
 
-*   **Monolithic Structure**: The entire application—including the UI, event handling, AI API calls, and business logic—is contained within a single Python script. This was a deliberate choice for rapid development but is not a sustainable architecture.
+*   **Legacy Monolith (Now Refactored)**: Earlier versions bundled nearly the entire app into one script. The repository has now been refactored into a package-based layout with dedicated modules for UI, workers, models, and app bootstrapping.
 *   **Tight Coupling**: There is no formal separation of concerns. UI elements directly call AI functions, making the code difficult to debug, modify, or extend.
 *   **Outdated Models**: The language models referenced in the code (primarily `qwen2.5:7b` and `phi4:14b`) were practical choices at the time of development. They are now significantly outdated and will produce lower-quality results.
 
@@ -217,6 +217,26 @@ This change alone will dramatically improve the quality of conversation generati
 For anyone interested in evolving Verbalink into a more serious, robust application, a complete rewrite and architectural redesign is the necessary first step. The current repository serves best as a functional blueprint of an idea, not as a foundation to build upon directly.
 
 A more robust implementation should be built on the following principles:
+
+## Current Project Structure
+
+The application is now organized as a Python package for maintainability and cleaner separation of concerns:
+
+```text
+Verbalink.py                # thin compatibility entrypoint
+verbalink/
+├── __main__.py             # python -m verbalink entrypoint
+├── app.py                  # main window + app lifecycle
+├── models.py               # domain data structures
+├── threading.py            # thread management helpers
+├── workers.py              # conversation/analysis background workers
+└── ui/
+    ├── assistant.py        # central assistant widget
+    ├── chrome.py           # custom frameless window/titlebar widgets
+    └── dialogs.py          # chat/configuration/analysis dialogs
+```
+
+This structure makes it substantially easier to test, evolve prompts, and extend the UI without touching unrelated features.
 
 1.  **Separation of Concerns**: The codebase should be broken down into distinct, logical modules. A potential structure could be:
     *   `ui/`: Containing all PyQt5 classes related to windows, dialogs, and widgets.
